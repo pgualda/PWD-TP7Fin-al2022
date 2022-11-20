@@ -106,6 +106,10 @@ class CTRLUsuarioRol {
         return $arreglo;
     }
 
-    
+    public function listarRolesNoActivos($idusuario,$rolActivo){
+        $where = " idusuario=$idusuario and not idrol=$rolActivo;";
+        $arreglo = UsuarioRol::listar($where, "");
+        return $arreglo;
+    }
 }
 ?>

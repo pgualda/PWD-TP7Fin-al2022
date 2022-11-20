@@ -1,10 +1,5 @@
 <?php 
 include_once("../../util/estructura/header.php");
-if ( !$OBJSession->puedoentrar(__FILE__) ) {
-    $mensaje ="Esta opcion requiere permisos, logeese para acceder";
-    echo $mensaje;
-    echo "<script>location.href = '../login/login.php?msg=".$mensaje."';</script>";
-}
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +42,7 @@ if ( !$OBJSession->puedoentrar(__FILE__) ) {
     <script type="text/javascript">
             var url;
             function newRol(){
-                $('#dlg').dialog('open').dialog('center').dialog('setTitle','Nuevo Menu');
+                $('#dlg').dialog('open').dialog('center').dialog('setTitle','Nuevo Rol');
                 $('#fm').form('clear');
                 url = 'alta_rol.php';
             }

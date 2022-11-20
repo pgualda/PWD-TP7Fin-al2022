@@ -33,8 +33,6 @@
 include_once "../../util/Estructura/header.php"; 
 $data = data_submitted();
 
-//var_dump($data);
-// tenemos los parametros, la fecha en texto (fdd y fhh) y el estado (0=todos)
 $fdd=$data['fdd'];
 $fhh=$data['fhh'];
 //$estado=$data['estado'];
@@ -87,10 +85,6 @@ if ( count($listacompra)>0){
             echo '<td>'.$descestado." ".$fechatoecho.'</td>';
             echo "<td>";  
             if ( $estadotipo == "3") {
-//              $qrcode_text=$objQr->decode($directorio.$archivo);
-//              echo "<div class='col-lg-2 col-md-3 col-sm-4  mb-3'>";
-//              echo "<button type='button' id='btnmodal' class='' data-toggle='modal' data-target='#exampleModal' data-nom='".$directorio.$archivo."' data-txtqr='".$qrcode_text."'>";
-              //$icono='data-options="iconCls:'."'icon-cut'"."'";
               echo "<a href='javascript:void(0)' id='cambiaestado' class='' 
                      style='width:90px; text-decoration:none' data-idcompra='".$objunacompra->getidcompra()."'>Cancelar</a>";
  
@@ -103,10 +97,6 @@ if ( count($listacompra)>0){
 </div>
 
 <script >
-/*	$(document).on("click", "#cambiaestado",function () {
-        var idcompra =$(this).data('idcompra');
-
-	}) */
 $('#cambiaestado').click(function() {
             var idcompra=$(this).data('idcompra');
             if (idcompra) {

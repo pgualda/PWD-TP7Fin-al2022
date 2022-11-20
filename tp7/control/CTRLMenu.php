@@ -9,16 +9,33 @@ class CTRLMenu {
      */
     
     public function cargarObjeto($param){
-        //    echo "entramos a cargar objeto";        print_R($param);
+        //    echo "entramos a  cargar objeto";        print_R($param);
         $obj = null;
         if (array_key_exists('menombre',$param) &&
             array_key_exists('medescripcion',$param) &&
             array_key_exists('idpadre',$param) &&
             array_key_exists('medeshabilitado',$param) &&
-            array_key_exists('sinrolrequerido',$param) ) { 
+            array_key_exists('sinrolrequerido',$param) ) {
+
+            //    var_dump($param['medeshabilitado']);
+            //    var_dump($param['sinrolrequerido']);
+         
+            $medeshabilitado=$param['medeshabilitado'] > 0 ? date("Y-m-d H:i:s") : null;
+            $sinrolrequerido=$param['sinrolrequerido'] > 0 ? 1 : null;
             $obj = new Menu();
-            $obj-> setear($param['idmenu'], $param['menombre'], $param['medescripcion'], $param['idpadre'],
-                          $param['medeshabilitado'],$param['meurl'],$param['sinrolrequerido']);
+            $objmenu = null;
+            if (isset($param['idpadre'])){
+                if ($param['idpadre'] != null) {
+                    $objmenu = new Menu();
+                    $objmenu->setIdmenu($param['idpadre']);
+                    $objmenu->cargar();
+                }
+            }
+            //var_dump($medeshabilitado);
+            //var_dump($sinrolrequerido);
+            
+            $obj-> setear($param['idmenu'], $param['menombre'], $param['medescripcion'], $objmenu,
+            $medeshabilitado,$param['meurl'],$sinrolrequerido);
         }
         return $obj;
     }
@@ -56,6 +73,8 @@ class CTRLMenu {
     public function alta($param){
         $resp = false;
         $obj = new Menu();
+// eccho
+//        var_dump($param);
         $obj = $this->cargarObjeto($param);
         if ($obj!=null and $obj->insertar()){
             $resp = true;

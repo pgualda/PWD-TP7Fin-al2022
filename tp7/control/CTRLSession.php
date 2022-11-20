@@ -118,10 +118,5 @@ class CTRLSession{
         // despues return x ahora echo
          return $ok;
     }         
-
-
-
-
-
 }
 ?>

@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8" name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <!--  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
-  <link rel="stylesheet" type="text/css" href="../../util/jquery-easyui-1.10.8/themes/black/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../../util/jquery-easyui-1.10.8/themes/default/easyui.css">
   <link rel="stylesheet" type="text/css" href="../../util/jquery-easyui-1.10.8/themes/icon.css">
   <link rel="stylesheet" type="text/css" href="../../util/jquery-easyui-1.10.8/themes/color.css">
   <link rel="stylesheet" type="text/css" href="../../util/jquery-easyui-1.10.8/demo/demo.css">
@@ -13,11 +13,7 @@
   <script type="text/javascript" src="../../util/jquery-easyui-1.10.8/jquery.easyui.min.js"></script>
   <script type="text/javascript" src="../../util/js/core.js"></script>
   <script type="text/javascript" src="../../util/js/md5.js"></script>
-	<style>
-		body{
-			background-color: #cccccc;
-		}
-	</style>
+
 
 </head>
 <body>
@@ -26,11 +22,6 @@
 <?php
 	include_once('../../configuracion.php');
 	$OBJSession=new CTRLSession;
-//	if ( !$OBJSession->puedoentrar(__FILE__) ) {
-//		echo "me rebota en el header";
-//		$mensaje ="Esta opcion ".__FILE__." requiere permisos, logeese para acceder";
-//		echo("<script>location.href = '../login/login.php?msg=".$mensaje."';</script>");
-//	}
 ?>
 
 <!-- para ver otros elementos posibilidades etc ver ej en demo/menubotton/nav.html -->
@@ -62,8 +53,7 @@
         // listo tenemos los items activos ahora los mostramos segun nivles
         // filtra primero idpadre=NULL			
 		foreach($arreglomenuok as $OBJunmenu) {
-
-            if ( $OBJunmenu->getobjmenu() ==NULL ) {
+            if ($OBJunmenu->getidpadre() == NULL) {
 				$url="#";
 				if ($OBJunmenu->getmeurl() != NULL) {
 					$url=$OBJunmenu->getmeurl();
@@ -76,27 +66,22 @@
         // barre de nuevo, cuando encuentra sin padre, hace un nuevo foreach SOLO de ese
 		foreach($arreglomenuok as $OBJunmenu) {
 
-			if ($OBJunmenu->getobjmenu()== NULL) {
+			if ($OBJunmenu->getidpadre() == NULL) {
 
  				echo "<div id='mm".$OBJunmenu->getidmenu()."' style='width:150px;'>";
 				foreach($arreglomenuok as $OBJunmenuhijo) {
 
-					if ($OBJunmenuhijo->getobjmenu() != NULL) {
-						if ($OBJunmenuhijo->getobjmenu()->getidmenu() == $OBJunmenu->getidmenu()) {
+					if ($OBJunmenuhijo->getidpadre() == $OBJunmenu->getidmenu()) {
 
-							// la hora de inflar los nenes                   
-	     				    $url="#";
-	//						var_dump($OBJunmenuhijo);
-							if ($OBJunmenuhijo->getmeurl() != null) {
-								$url=$OBJunmenuhijo->getmeurl();
-							}
-							echo "	<div>";
-							echo "<a href='".$url."' class='easyui-menubutton'
-							      style='margin:3px;padding:3px; text-decoration:none;'
-								  >".$OBJunmenuhijo->getmenombre()."</a>";
-	// funcionando pero link comun						echo "      <a href='" . $url ."'>".$OBJunmenuhijo->getmenombre()."</a>";
-							echo "	</div>";
-						}	
+						// la hora de inflar los nenes                   
+     				    $url="#";
+//						var_dump($OBJunmenuhijo);
+						if ($OBJunmenuhijo->getmeurl() != null) {
+							$url=$OBJunmenuhijo->getmeurl();
+						}
+						echo "	<div>";
+						echo "      <a href='" . $url ."'>".$OBJunmenuhijo->getmenombre()."</a>";
+						echo "	</div>";
 					}	
 				}
 				echo "</div>"; // cierra el div dentro del padre

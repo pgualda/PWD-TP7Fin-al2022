@@ -133,8 +133,8 @@ class CTRLCompraItem {
     public function listarPorIdCompra($data)
     {
         $OBJSession = new CTRLSession;
-        $user = $OBJSession->getidUsuario();
         $ctCom = new CTRLCompra();
+        $user = $OBJSession->getidUsuario();
         $listar = $ctCom->buscar(['idusuario' => $user]);
         $ultimo = end($listar);
         $idcompra = $ultimo->getidcompra();

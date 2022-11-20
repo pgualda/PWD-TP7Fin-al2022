@@ -101,6 +101,7 @@ class Compraestado{
         $resp = false;
         $base=new BaseDatos();
         $sql="INSERT INTO compraestado (`idcompra`, `idcompraestadotipo`)  VALUES(".$this->getobjcompra()->getidcompra().",".$this->getobjcompraestadotipo()->getidcompraestadotipo().");";
+//echo $sql;
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setidcompraestado($elid);
@@ -118,6 +119,8 @@ class Compraestado{
         $resp = false;
         $base=new BaseDatos();
         $sql="UPDATE `compraestado` SET `idcompra`=".$this->getobjcompra()->getidcompra().",`idcompraestadotipo`=".$this->getobjcompraestadotipo()->getidcompraestadotipo().",`cefechafin`='".$this->getcefechafin()."' WHERE `idcompraestado`=".$this->getidcompraestado().";";
+//        echo $sql;
+
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
