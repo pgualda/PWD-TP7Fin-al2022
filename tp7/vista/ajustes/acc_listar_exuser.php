@@ -3,7 +3,7 @@ include_once('../../configuracion.php');
 
 $data = data_submitted();
 $objControl = new CTRLUsuario();
-$list = $objControl->listarUsuariosActivos();
+$list = $objControl->ListarExUsers();
 // var_dump($list);
 $arreglo_salida =  array();
 foreach ($list as $elem ){

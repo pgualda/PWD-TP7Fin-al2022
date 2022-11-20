@@ -80,7 +80,7 @@ class MenuRol{
     public function insertar(){
         $resp = false;
         $base=new BaseDatos();
-        $sql="INSERT INTO `menurol` (`idmenu`, `idrol`)  VALUES(".$this->getOBJMenu()->getidmenu().",".$this->getOBJRol()->getidrol().");";
+        $sql="INSERT INTO menurol (idmenu, idrol)  VALUES(".$this->getOBJMenu()->getidmenu().",".$this->getOBJRol()->getidrol().");";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -95,17 +95,6 @@ class MenuRol{
     
     public function modificar(){
         $resp = false;
-        /* $base=new BaseDatos();
-        $sql="UPDATE Menurol SET `idusuario`=".$this->getOBJUsuario().",`idrol`=".$this->getOBJRol()." WHERE idusuario=".$this->getOBJUsuario()." AND idrol=".$this->getOBJRol();
-        if ($base->Iniciar()) {
-            if ($base->Ejecutar($sql)) {
-                $resp = true;
-            } else {
-                $this->setmensajeoperacion("Menurol->modificar: ".$base->getError());
-            }
-        } else {
-            $this->setmensajeoperacion("Menurol->modificar: ".$base->getError());
-        } */
         return $resp;
     }
     

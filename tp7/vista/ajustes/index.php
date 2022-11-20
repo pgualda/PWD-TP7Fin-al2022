@@ -12,74 +12,73 @@
 <body>
     <?php include_once "../../util/Estructura/header.php"; ?>
 
-    <div class="easyui-panel" style="padding:5px;">
-        <?php
-        $OBJSession = new CTRLSession;
-
-        echo "<br>-----<br>";
-        /* estoy validado */
-        /* estoy validado */
-        /* estoy validado */
-        if ($OBJSession->validar()) {
-
-            echo "<a class='easyui-linkbutton c2' id='btn-cerrar' href='../login/logout.php' style='margin:3px;padding:3px;float: right'>Cerrar sesion</a>";
-
-            //ahora mostramos usuario y rol
-            echo "Nombre usuario:" . $OBJSession->getUsuario();
-            echo " - Rol activo:" . $OBJSession->getRol();
-            echo " - idusuario:" . $OBJSession->getidUsuario();
-        ?>
-    </div>
 
     <br>
-    <div id="tt" class="easyui-tabs" style="width:800px;height:500px;">
-        <div title="Datos Personales" style="padding:20px;display:none;">
+    <div id="tt" class="easyui-tabs" style="width:960px;height:640px;">
+        <div title="Ajustes Usuarios activos" style="padding:20px;display:none;">
 
+            <!-- d a t a g r i d   u s u a r i o s   a c t i v o s -->
 
-            <table id="dgDatos" title="Mis datos" class="easyui-datagrid" style="width:800px;height:200px" toolbar="#toolbar2" pagination="false" rownumbers="true" fitColumns="true" singleSelect="true">
+            <table id="dgusers" title="Usuarios activos" url="acc_listar_user.php" class="easyui-datagrid" style="width:800px;height:200px" toolbar="#tbuser" pagination="false" rownumbers="true" fitColumns="true" singleSelect="true">
                 <thead>
                     <tr>
                         <th field="idusuario" width="5px">ID</th>
                         <th field="usnombre" width="25px">Nombre</th>
-                        <th field="uspass" width="20px">pass</th>
+                        <!--                         <th field="uspass" width="20px">pass</th> -->
                         <th field="usmail" width="35px">mail</th>
-                        <th field="usdeshabilitado" width="10px">deshab</th>
+                        <!--                         <th field="usdeshabilitado" width="10px">deshab</th> -->
                     </tr>
                 </thead>
             </table>
 
-            <div id="toolbar2">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="editUsuario()">Editar Datos</a>
-    </div>
+            <!-- d a t a g r i d   r o l e s   d e l   u s u a r i o -->
 
-
-        </div>
-        <div title="Cambiar Rol" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
-
-            <!-- datagrid rol -->
-            <h3>Rol Activo: <?php echo $OBJSession->getRol(); ?></h3>
-            <table id="dgRol" title="Cambiar rol" class="easyui-datagrid" style="width:700px;height:250px" toolbar="#toolbar" pagination="false" fitColumns="true" singleSelect="true">
+            <table id="dgRol" class="easyui-datagrid" style="width:700px;height:300px" url="acc_listar_rol.php" toolbar="#tbrol" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true" data-options="method:'post',queryParams:{idusuario:''},title:'Roles'">
                 <thead>
                     <tr>
+                        <th field="idusuario" width="10px" hidden>ID</th>
                         <th field="idrol" width="10px">ID</th>
                         <th field="rodescripcion" width="20px">Nombre</th>
-                        <th field="idusuario" width="20px">idusuario</th>
                     </tr>
                 </thead>
             </table>
 
+            <div id="tbuser">
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addUser()">Nuevo usuario</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Editar usuario</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="bajaUser()">Dar de baja</a>
+            </div>
 
+            <div id="tbrol">
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addRol()">Agregar rol</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="quitRol()">Quitar rol</a>
+            </div>
+            <p id="idusersel">sin selecc</p>
+
+        </div>
+        <div title="Usuarios inactivos" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
+
+            <!-- d a t a g r i d   u s u a r i o s   i n a c t i v o s -->
+
+            <table id="dgexuser" url="acc_listar_exuser.php" title="Deshabilitados" class="easyui-datagrid" style="width:700px;height:250px" toolbar="#tbexus" pagination="false" fitColumns="true" singleSelect="true">
+                <thead>
+                    <tr>
+                        <th field="idusuario" width="10px">ID usuario</th>
+                        <th field="usnombre" width="20px">Nombre</th>
+                        <th field="usdeshabilitado" width="20px">Fecha</th>
+                    </tr>
+                </thead>
+            </table>
+            <!-- toolbar ex users -->
+            <div id="tbexus">
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="habUser()">Habilitar Usuario</a>
+            </div>
         </div>
     </div>
 
 
+    <!-- m o d a l  p a r a   u s u a r i o s -->
 
-    <!-- toolbar -->
-    <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newRol()">Seleccionar rol</a>
-    </div>
-
-    <!-- modal -->
     <div id="dlg" class="easyui-dialog" style="width:600px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
         <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
             <div style="margin-bottom:10px">
@@ -94,106 +93,102 @@
             <div style="margin-bottom:10px" style="display:none">
                 <input name="uspass" id="uspass" class="easyui-textbox" type="password" label="Clave" style="width:100%;display:none;">
             </div>
-            
+
         </form>
     </div>
 
-    <!-- opciones modal -->
+    <!-- o p c i o n e s   m o d a l   u s u a r i o s -->
+
     <div id="dlg-buttons">
-        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUsuario()" style="width:90px">Aceptar</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Aceptar</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
     </div>
 
 
 
-<?php
-            /* No estoy validado */
-            /* No estoy validado */
-            /* No estoy validado */
-        } else {
-            echo " - Rol activo:" . $OBJSession->getRol();
-?>
-    <a class='easyui-linkbutton c2' style='margin:3px;padding:3px;' href='../home/'>Usted anda perdido vuelva al inicio</a>
 
 
-<?php
-        }
-?>
+    <script>
+        var url;
+            function selectrol() {
+                alert('ok');
+            }
 
-
-<script>
-    var url;
-
-    // filtro para carrito por idusuario del usuario
-    var val = <?php echo $OBJSession->getidUsuario(); ?>;
-    $('#dgDatos').datagrid({
-        url: 'acc_listar_user.php',
-        queryParams: {
-            idusuario: 1
-        }
-    });
-
-    // filtro para carrito por idusuario del usuario
-    var val2 = <?php echo $OBJSession->getidUsuario(); ?>;
-    var rol = <?php echo $OBJSession->getRol(); ?>;
-    $('#dgRol').datagrid({
-        url: 'acc_listar_rol.php',
-        queryParams: {
-            idusuario: val2,
-            idrol: rol
-        }
-    });
-
-    function editUsuario() {
-        var row = $('#dgDatos').datagrid('getSelected');
-
-        if (row) {
-            $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Editar Usuario');
-            $('#fm').form('load', row);
-            url = 'edit_usuario.php?idusuario=' + row.idusuario + '&usnombre=' + row.usnombre +'&uspass='+ row.uspass +'&usmail=' + row.usmail ;
-            // debug OKA
-            // console.log(row.idusuario);
-
-        }
-    }
-
-    function saveUsuario() {
-        //alert(" Accion");
-        $('#fm').form('submit', {
-            url: url,
-            onSubmit: function() {
-                return $(this).form('validate');
-            },
-            success: function(result) {
-                alert("Save Volvio Serviodr"+result);   
-                var result = eval('(' + result + ')');
-                alert("Save Volvio Serviodr"+result.errorMsg);   
-
-                if (!result.respuesta) {
-                    $.messager.show({
-                        title: 'Error',
-                        msg: result.errorMsg
-                    });
-                } else {
-                    $('#dlg').dialog('close'); // close the dialog
-                    $('#dgDatos').datagrid('reload'); // reload 
-                }
+        $('#dgusers').datagrid({
+            onSelect: function(index, field, value) {
+                var row = $('#dgusers').datagrid('getSelected');
+                $('#idusersel').html(row.idusuario);
+                $('#dgRol').datagrid('load', {
+                    idusuario: row.idusuario
+                });
             }
         });
-    }
+
+        //          h  a  b  i  l  i  t  a  r     u  s  u  a  r  i  o
+        
+        function habUser(){
+                var row = $('#dgexuser').datagrid('getSelected');
+                if (row){
+                    $.messager.confirm('Confirm','Desea dar de alta a este usuario?', function(r){
+                        if (r){
+                            $.post('acc_hab_user.php?idusuario='+row.idusuario,
+                            {
+                                idusuario:row.idusuario
+                            },
+                               function(result){
+//                               	 alert("Baja - Volvio Servidor"+result);   
+                                 if (result.respuesta){
+                                    $('#dgusers').datagrid('reload');    // reload the  data
+                                    $('#dgexuser').datagrid('reload');    // reload the  data
+                                } else {
+                                    $.messager.show({    // show error message
+                                        title: 'Error',
+                                        msg: result.errorMsg
+                                  });
+                                }
+                            },'json');
+                        }
+                    });
+                }
+            }
+
+        //          d  e  s  h  a  b  i  l  i  t  a  r     u  s  u  a  r  i  o
+
+        function bajaUser(){
+                var row = $('#dgusers').datagrid('getSelected');
+                if (row){
+                    $.messager.confirm('Confirm','Desea dar de baja a este usuario?', function(r){
+                        if (r){
+                            $.post('acc_des_user.php?idusuario='+row.idusuario,
+                            {
+                                idusuario:row.idusuario
+                            },
+                               function(result){
+//                               	 alert("Baja - Volvio Servidor"+result);   
+                                 if (result.respuesta){
+                                    $('#dgusers').datagrid('reload');    // reload the  data
+                                    $('#dgexuser').datagrid('reload');    // reload the  data
+                                } else {
+                                    $.messager.show({    // show error message
+                                        title: 'Error',
+                                        msg: result.errorMsg
+                                  });
+                                }
+                            },'json');
+                        }
+                    });
+                }
+            }
 
 
 
 
 
+    </script>
 
 
-    
-</script>
-
-
-</div>
-<?php include_once "../../util/Estructura/footer.php"; ?>
+    </div>
+    <?php include_once "../../util/Estructura/footer.php"; ?>
 </body>
 
 </html>

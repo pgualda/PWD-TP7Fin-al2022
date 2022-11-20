@@ -32,7 +32,7 @@
                     $defRol = null ? $defRol = "Sin rol asignado" : $defRol = $objunrol->getOBJRol()->getrodescripcion();
                 }
             }
-            echo "<a class='easyui-linkbutton c2' id='btn-cerrar' href='../login/logout.php' style='margin:3px;padding:3px;'>Cerrar sesion</a>";
+            // echo "<a class='easyui-linkbutton c2' id='btn-cerrar' href='../login/logout.php' style='margin:3px;padding:3px;'>Cerrar sesion</a>";
         } else {
         ?>
             <a class='easyui-linkbutton c2' style='margin:3px;padding:3px;' href='../usuario/nuevousuario.php'>Generar un usuario de cliente -debera ser validado-</a>

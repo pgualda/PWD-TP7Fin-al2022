@@ -89,7 +89,7 @@ public function setear($idrol,$rodescripcion){
                 }
             }
         } else {
-            $this->setmensajeoperacion("persona->listar: ".$base->getError());
+            self::setmensajeoperacion("persona->listar: ".$base->getError());
         }
     
         return $arreglo;

@@ -117,7 +117,7 @@ public function setear($idusuario,$usnombre,$uspass,$usmail,$usdeshabilitado){
                 }
             }
         } else {
-            $this->setmensajeoperacion("usuario->listar: ".$base->getError());
+            self::setmensajeoperacion("usuario->listar: ".$base->getError());
         }
     
         return $arreglo;
@@ -140,8 +140,7 @@ public function setear($idusuario,$usnombre,$uspass,$usmail,$usdeshabilitado){
     public function modificar(){
         $resp = false;
         $base=new BaseDatos();
-        $sql="UPDATE usuario SET usnombre='".$this->getusnombre()."',uspass='".$this->getuspass()."',usmail='".$this->getusmail()."',usdeshabilitado=". $this->getusdeshabilitado()." WHERE idusuario=".$this->getidusuario().";";
-
+        $sql="UPDATE usuario SET usnombre='".$this->getusnombre()."',uspass='".$this->getuspass()."',usmail='".$this->getusmail()."',usdeshabilitado=".$this->getusdeshabilitado()." WHERE idusuario=".$this->getidusuario().";";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;

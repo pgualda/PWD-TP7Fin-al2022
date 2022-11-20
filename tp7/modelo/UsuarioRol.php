@@ -162,7 +162,7 @@ class UsuarioRol{
                 }
             }
         } else {
-            $this->setmensajeoperacion("Usuariorol->listar: ".$base->getError());
+            self::setmensajeoperacion("Usuariorol->listar: ".$base->getError());
         }
         return $arreglo;
     }

@@ -125,6 +125,45 @@ class CTRLUsuario {
         $arr = Usuario::listar($where);
         return $arr;
     }
+
+    public function listarUsuariosActivos(){
+        $where = " usdeshabilitado is NULL";
+        $arr = Usuario::listar($where);
+        return $arr;
+    }
+
+    public function ListarExUsers(){
+        $where = " usdeshabilitado is NOT NULL";
+        $arr = Usuario::listar($where);
+        return $arr;
+    }
     
+    public function habilitar($idusuario){
+        $where = " idusuario=$idusuario";
+        $objUsuario = Usuario::listar($where);
+        $obj = $objUsuario[0];
+        $obj->setusdeshabilitado("NULL");
+        $resp = false;
+        if($obj !=null and $obj->modificar()){
+            $resp = true;
+        }
+        
+        return $resp;
+    }
+
+    public function deshabilitar($idusuario){
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+        $where = " idusuario=$idusuario";
+        $objUsuario = Usuario::listar($where);
+        $obj = $objUsuario[0];
+        $fechaActual = date('Y-m-d H:i:s');
+        $obj->setusdeshabilitado("'$fechaActual'");
+        $resp = false;
+        if($obj !=null and $obj->modificar()){
+            $resp = true;
+        }
+        
+        return $resp;
+    }
 }
 ?>
