@@ -1,13 +1,21 @@
 <?php
 include_once "../../configuracion.php";
 $data = data_submitted();
-
+$respuesta = false;
+$data['idusuario'] = $data['idusuario2'];
+//var_dump($data);
 if (isset($data['idusuario'])){
     $objC = new CTRLUsuarioRol();
-    //$respuesta = $objC->deshabilitar($data['idusuario']);
-    var_dump($data);
-    if (!$respuesta){
-        $mensaje = " La accion HABILITAR No pudo concretarse";
+
+    if(!$objC->YaLoTengo($data['idusuario'],$data['idrol'])){
+        $mensaje = "El usuario ya posee este rol";
+    }else{
+
+        $respuesta = $objC->alta($data);
+        if (!$respuesta){
+            $mensaje = " La accion HABILITAR No pudo concretarse";
+        }
+
     }
 }
 

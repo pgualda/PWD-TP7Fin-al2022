@@ -106,10 +106,15 @@ class CTRLUsuarioRol {
         return $arreglo;
     }
 
-    public function listarRolesNoActivos($idusuario,$rolActivo){
-        $where = " idusuario=$idusuario and not idrol=$rolActivo;";
-        $arreglo = UsuarioRol::listar($where, "");
-        return $arreglo;
+    public function YaLoTengo($idusuario,$idrol){
+        $resp = true;
+        $where = " idusuario=$idusuario and idrol=$idrol;";
+        $obj = UsuarioRol::listar($where);
+        if(array_key_exists(0,$obj)){
+            $resp = false;
+        }
+        return $resp;
+
     }
 }
 ?>

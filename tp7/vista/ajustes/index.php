@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
-
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>FERRETERIA MAYORISTA</title>
 </head>
-
 <body>
-
     <?php
     include_once "../../util/Estructura/header.php";
     $objRoles = new CTRLRol();
     $arrRoles = $objRoles->buscar(null);
-
+    $combo = '<option></option>';
+    foreach ($arrRoles as $rol) {
+        $combo .= '<option value="' . $rol->getidrol() . '" > ' . $rol->getrodescripcion();
+    }
 
     ?>
 
@@ -64,10 +62,9 @@
             <p id="idusersel">sin selecc</p>
 
         </div>
+
+        <!-- d a t a g r i d   u s u a r i o s   i n a c t i v o s -->
         <div title="Usuarios inactivos" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
-
-            <!-- d a t a g r i d   u s u a r i o s   i n a c t i v o s -->
-
             <table id="dgexuser" url="acc_listar_exuser.php" title="Deshabilitados" class="easyui-datagrid" style="width:700px;height:250px" toolbar="#tbexus" pagination="false" fitColumns="true" singleSelect="true">
                 <thead>
                     <tr>
@@ -83,10 +80,9 @@
             </div>
         </div>
     </div>
-
+    <!-- ------------------------------------------------------------------H  I  D  D  E  N ------------------------------------------------------------------ -->
 
     <!-- m o d a l  p a r a   u s u a r i o s -->
-
     <div id="dlg" class="easyui-dialog" style="width:600px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
         <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
             <div style="margin-bottom:10px">
@@ -108,34 +104,32 @@
     </div>
 
     <!-- o p c i o n e s   m o d a l   u s u a r i o s -->
-
     <div id="dlg-buttons">
         <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Aceptar</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
     </div>
 
     <!-- m o d a l   p a r a   a s i g n a r   r o l e s -->
-
     <div id="dlgrol" class="easyui-dialog" style="width:600px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlgrol-buttons'">
         <form id="fmrol" method="post" style="margin:0;padding:20px 50px">
+            <div style="margin-bottom:10px">
+                <input name="idusuario2" id="idusuario2" hidden label="ID" style="width:100%" readonly>
+            </div>
+            <div style="margin-bottom:10px">
+            <select class="easyui-combobox"  id="idrol"  name="idrol" label="Seleccione Rol:" labelPosition="top" style="width:90%;">
             <?php
-            foreach ($arrRoles as $rol) {
-                echo '<div style="margin-bottom:10px">';
-                echo '<input class="easyui-checkbox" name="rol" value="' . $rol->getidrol() . '" label="' . $rol->getrodescripcion() . ':">';
-                echo '</div>';
-            }
+            echo $combo;
             ?>
+            </select>
+            </div>
         </form>
     </div>
 
     <!-- o p c i o n e s   m o d a l   r o l e s -->
-
     <div id="dlgrol-buttons">
         <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="asigRoles()" style="width:90px">Aceptar</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlgrol').dialog('close')" style="width:90px">Cancelar</a>
     </div>
-
-
 
 
     <script>
@@ -144,6 +138,8 @@
         function selectrol() {
             alert('ok');
         }
+
+        //          c a r g a   l o s   r o l e s   d e   l o s   u s u a r i o s 
 
         $('#dgusers').datagrid({
             onSelect: function(index, field, value) {
@@ -157,35 +153,38 @@
 
         //          a  g  r  e  g  a  r     n  u  e  v  o    u  s  u  a  r  i  o
 
-        function addUser(){
-    
-                $('#dlg').dialog('open').dialog('center').dialog('setTitle','Nuevo Usuario');
-                $('#fm').form('clear');
-                url = 'acc_alta_usuario.php';
-    
+        function addUser() {
+
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Nuevo Usuario');
+            $('#fm').form('clear');
+            url = 'acc_alta_usuario.php';
+
         }
 
-        //          a  s  i  g  n  a  r     r  o  l  e  s
+        //          m  o  d  a  l    a  s  i  g  n  a  r     r  o  l  e  s
 
         function addRol() {
             var row = $('#dgusers').datagrid('getSelected');
+            row.idusuario2 = row.idusuario
             if (row) {
-                $('#dlgrol').dialog('open').dialog('center').dialog('setTitle', 'seleccione roles');
+                $('#dlgrol').dialog('open').dialog('center').dialog('setTitle', 'seleccione un rol');
+                $('#fmrol').form('load',row);
+                url = 'acc_asignar_roles.php';
             }
 
         }
 
+        //          a  s  i  g  n  a  r     r  o  l  e  s
+
         function asigRoles() {
-            alert(row.idusuario);
-            if (row) {
-                $.post('acc_hab_user.php?idusuario=' + row.idusuario, {
+            /* if (row) {
+                $.post('acc_asignar_roles.php?idusuario=' + row.idusuario, {
                         idusuario: row.idusuario
                     },
                     function(result) {
                         //                               	 alert("Baja - Volvio Servidor"+result);   
                         if (result.respuesta) {
-                            $('#dgusers').datagrid('reload'); // reload the  data
-                            $('#dgexuser').datagrid('reload'); // reload the  data
+                            $('#dgRol').datagrid('reload'); // reload the  data
                         } else {
                             $.messager.show({ // show error message
                                 title: 'Error',
@@ -193,7 +192,28 @@
                             });
                         }
                     }, 'json');
-            }
+            } */
+            $('#fmrol').form('submit',{
+                    url: url,
+                    onSubmit: function(){
+                        return $(this).form('validate');
+                    },
+                    success: function(result){
+                        var result = eval('('+result+')');
+                        if (!result.respuesta){
+                            $.messager.show({
+                                title: 'Error',
+                                msg: result.errorMsg
+                            });
+                        } else {
+                            $('#dlgrol').dialog('close');        // close the dialog
+                            $('#dgRol').datagrid('reload');    // reload 
+                        }
+                }
+            });
+            
+
+
         }
 
         //          h  a  b  i  l  i  t  a  r     u  s  u  a  r  i  o
@@ -249,9 +269,36 @@
                 });
             }
         }
+
+        //          q  u  i  t  a  r     r  o  l 
+        function quitRol() {
+            var rowuser = $('#dgusers').datagrid('getSelected');
+            var row = $('#dgRol').datagrid('getSelected');
+            if (row) {
+                $.messager.confirm('Confirm', 'Seguro que desea eliminar?', function(r) {
+                    if (r) {
+                        $.post('eliminar_rol.php?idusuario=' + rowuser.idusuario + '&idrol' + row.idrol, {
+                                idusuario: rowuser.idusuario,
+                                idrol: row.idrol
+                            },
+                            function(result) {
+                                // alert("Baja - Volvio Servidor"+result);   
+                                if (result.respuesta) {
+
+                                    $('#dgRol').datagrid('reload'); // reload the  data
+                                } else {
+                                    $.messager.show({ // show error message
+                                        title: 'Error',
+                                        msg: result.errorMsg
+                                    });
+                                }
+                            }, 'json');
+                    }
+                });
+            }
+        }
+
     </script>
-
-
     </div>
     <?php include_once "../../util/Estructura/footer.php"; ?>
 </body>
