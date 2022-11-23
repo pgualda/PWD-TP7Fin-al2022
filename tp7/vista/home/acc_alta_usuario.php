@@ -6,7 +6,7 @@ $respuesta = false;
 //foreach ($data as $ele) {
 //$console="antes del if idrol:".$ele; }
 //echo "<script>console.log('Console: " . $console . "' );</script>";
-if (strlen($data['usnombre']) < 3 ){
+if (strlen($data['usnombre']) > 3 ){
     
     if (isset($data['usnombre'])) {
         $objC = new CTRLUsuario();
