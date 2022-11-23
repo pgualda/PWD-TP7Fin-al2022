@@ -8,6 +8,7 @@ class CTRLUsuario {
      */
     
     public function cargarObjeto($param) {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         //    echo "entramos a cargar objeto";        print_R($param);
         $obj = null;
         if ( array_key_exists('usnombre',$param) ) {
@@ -15,7 +16,9 @@ class CTRLUsuario {
             //$obj-> setear($param['idusuario'], $param['usnombre'], $param['uspass'], $param['usmail'], $param['usdeshabilitado']);
 
             if(array_key_exists('usdeshabilitado',$param)){
-                $obj-> setear($param['idusuario'], $param['usnombre'], $param['uspass'], $param['usmail'], $param['usdeshabilitado']);
+                //$obj-> setear($param['idusuario'], $param['usnombre'], $param['uspass'], $param['usmail'], $param['usdeshabilitado']);
+                $obj-> setear($param['idusuario'], $param['usnombre'], $param['uspass'], $param['usmail'], date('Y-m-d H:i:s'));
+
             }else{
                 $obj-> setear($param['idusuario'], $param['usnombre'], $param['uspass'], $param['usmail'], NULL);
             }
@@ -163,6 +166,16 @@ class CTRLUsuario {
             $resp = true;
         }
         
+        return $resp;
+    }
+
+    public function yaExiste($nombre){
+        $resp = true;
+        $where = " usnombre='".$nombre."'";
+        $obj = Usuario::listar($where);
+        if(array_key_exists(0,$obj)){
+            $resp = false;
+        }
         return $resp;
     }
 }

@@ -29,14 +29,47 @@
                 //$datosRoles = array($)
                 if ($objunrol->getOBJRol()->getidrol() != $OBJSession->getRol()) {
                     echo "<a class='easyui-linkbutton c3' href='javascript:void(0)' style='margin:3px;padding:3px;' onclick='setrol(" . $objunrol->getOBJRol()->getidrol() . ")'>Selecciona rol " . $objunrol->getOBJRol()->getrodescripcion() . "</a>";
-                    $defRol = null ? $defRol = "Sin rol asignado" : $defRol = $objunrol->getOBJRol()->getrodescripcion();
                 }
             }
-            // echo "<a class='easyui-linkbutton c2' id='btn-cerrar' href='../login/logout.php' style='margin:3px;padding:3px;'>Cerrar sesion</a>";
         } else {
         ?>
-            <a class='easyui-linkbutton c2' style='margin:3px;padding:3px;' href='../usuario/nuevousuario.php'>Generar un usuario de cliente -debera ser validado-</a>
+            <a class='easyui-linkbutton c2' style='margin:3px;padding:3px;' href='javascript:void(0)' plain="true" onclick="newUsuario()">Generar un usuario de cliente -debera ser validado-</a>
             <a class='easyui-linkbutton c2' style='margin:3px;padding:3px;' href='../login/login.php'>Logearse</a>
+
+            <!--  m o d a l   p a r a   n u e v o   r e g i s t r o -->
+
+            <div id="dlgnuevo" class="easyui-dialog" style="width:600px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons-nuevo'">
+                <form id="fmusuario" method="post" style="margin:0;padding:20px 50px" data-options="novalidate:true">
+                    <div style="margin-bottom:10px">
+                        <input name="idusuario" id="idusuario" label="ID" style="width:100%" value="null" hidden>
+                    </div>
+                    <div style="margin-bottom:10px">
+                        <label for="usnombre">Ingrese nombre</label>
+                        <input name="usnombre" id="usnombre" class="easyui-textbox" data-options="required:true,validType:'length[3,10]',validateOnCreate:false,err:err" style="width:100%">
+                    </div>
+                    <div style="margin-bottom:10px">
+                        <label for="usmail">Ingese email</label>
+                        <input name="usmail" id="usmail" class="easyui-textbox" data-options="required:true,validType:'email',validateOnCreate:false,err:err" style="width:100%">
+                    </div>
+                    <div style="margin-bottom:10px" style="display:none">
+                        <label for="uspass">Ingrese Contraseña</label>
+                        <input name="uspass" id="uspass" class="easyui-textbox" type="password" data-options="validateOnCreate:false,required:true,validType:'length[6,10]',err:err" style="width:100%;display:none;" pattern="{6-10}">
+                    </div>
+                    <div style="margin-bottom:10px" style="display:none">
+                        <label for="uspass2">Reingrese contraseña</label>
+                        <input name="uspass2" id="uspass2" class="easyui-textbox" type="password" required="required" data-options="validateOnCreate:false,err:err" validType="equals['#uspass']" style="width:100%;display:none;">
+                    </div>
+                </form>
+            </div>
+
+            <!-- o p c i o n e s   m o d a l   p a r a   n u e v o   r e g i s t r o  -->
+
+            <div id="dlg-buttons-nuevo">
+                <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUsuario()" style="width:90px">Aceptar</a>
+
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlgnuevo').dialog('close')" style="width:90px">Cancelar</a>
+            </div>
+
 
         <?php
         }
@@ -47,8 +80,7 @@
     <h1>Bienvenido <?php echo $OBJSession->getusuario(); ?> </h1>
     <h3>Su rol actual: <?php echo $roll[0]->getOBJrol()->getrodescripcion(); ?></h3>
 
-    <!-- Aca deberia ir el boton de modificar datos personales -->
-
+    <!-- M o d i f i c a r   d   a   t   o   s   p e r s o n a l e s -->
     <table id="dgDatos" title="Mis datos" class="easyui-datagrid" style="width:800px;height:150px" url="acc_listar_misdatos.php" toolbar="#toolbar2" pagination="false" rownumbers="false" fitColumns="true" singleSelect="true">
         <thead>
             <tr>
@@ -60,13 +92,13 @@
             </tr>
         </thead>
     </table>
-
+    <!-- o p c i o n e s   d e   d a t o s   p e r s o n a l e s -->
     <div id="toolbar2">
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUsuario()">Editar Mail</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editPass()">Cambiar Contraseña</a>
     </div>
 
-    <!-- modal -->
+    <!-- m o d a l   p a r a   m o d i f i c a r   d a t o s   p e r s o n a l e s -->
     <div id="dlg" class="easyui-dialog" style="width:600px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
         <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
             <div style="margin-bottom:10px" style="display:none">
@@ -80,33 +112,78 @@
             </div>
             <div style="margin-bottom:10px">
                 <label for="uspass">Ingrese nueva pass:</label>
-                <input name="uspass" id="uspass" required type="password" label="Clave" style="width:100%">
+                <input name="uspass" id="uspass" type="password" data-options="validateOnCreate:true,required:true,validType:'length[6,10]'" label="Clave" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
                 <label for="uspass2">reingrese pass:</label>
-                <input name="uspass2" id="uspass2" required type="password" style="width:100%">
+                <input name="uspass2" id="uspass2" type="password" required="required" data-options="validateOnCreate:true" validType="equals['#uspass']" style="width:100%;display:none;">
+                <!-- 
+                <input name="uspass2" id="uspass2" type="password" data-options="validateOnCreate:true" validType="equals['#uspass']" style="width:100%"> -->
             </div>
         </form>
     </div>
 
-    <!-- opciones modal -->
+    <!-- o p c i o n e s   m o d a l  -->
     <div id="dlg-buttons">
         <a href="javascript:void(0)" id="enviar" type="submit" class="easyui-linkbutton c6" iconCls="icon-ok" onsubmit="" style="width:90px">Aceptar</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
     </div>
+
 
 <?php
         }
 ?>
 
 </div>
-<script type="text/javascript">
 
+<style scoped="scoped">
+    .tb {
+        width: 100%;
+        margin: 0;
+        padding: 5px 4px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    .error-message {
+        margin: 4px 0 0 0;
+        padding: 0;
+        color: red;
+    }
+</style>
+
+
+<script type="text/javascript">
+    /* Mostrar estado de validacion */
+
+    function err(target, message) {
+        var t = $(target);
+        if (t.hasClass('textbox-text')) {
+            t = t.parent();
+        }
+        var m = t.next('.error-message');
+        if (!m.length) {
+            m = $('<div class="error-message"></div>').insertAfter(t);
+        }
+        m.html(message);
+    }
+
+    $.extend($.fn.validatebox.defaults.rules, {
+        equals: {
+            validator: function(value, param) {
+                return value == $(param[0]).val();
+            },
+            message: 'Las contraseñas no coinciden.'
+        }
+    });
+
+    /* Setear rol */
     function setrol(idrol) {
         $.post('setrol.php?idrol=' + idrol);
         location.href = '../home/index.php';
     }
 
+    /* funcion que llama y modifica dgDatos para poder cambiar el email*/
     function editUsuario() {
         var row = $('#dgDatos').datagrid('getSelected');
         var a = "NULL"
@@ -129,7 +206,7 @@
         }
     }
 
-
+    /* funcion que llama y modifica dgDatos para editar contraseña */
     function editPass() {
         var row = $('#dgDatos').datagrid('getSelected');
 
@@ -153,6 +230,7 @@
         }
     }
 
+    /* Funcion que modifica los datos  */
     $('#enviar').click(function(e) {
         e.preventDefault();
         var idusuario = document.getElementById('idusuario').value;
@@ -200,6 +278,54 @@
         })
 
     })
+
+
+    function saveUsuario() {
+        var idusuario = document.getElementById('idusuario').value;
+        var usnombre = document.getElementById('usnombre').value;
+        var usmail = document.getElementById('usmail').value;
+        var uspass = document.getElementById('uspass').value;
+        var uspass2 = document.getElementById('uspass2').value;
+        var usdeshabilitado = "NULL";
+        var hashpass = CryptoJS.MD5(uspass2);
+        var ruta = 'idusuario=' + idusuario + '&usnombre=' + usnombre + '&uspass=' + hashpass + '&usmail=' + usmail + '&usdeshabilitado=' + usdeshabilitado;
+
+            $.ajax({
+                url: "acc_alta_usuario.php",
+                type: 'POST',
+                data: ruta,
+                onSubmit: function() {
+                    return $('#fmusuario').form('validate');
+                },
+                success: function(result) {
+                    alert("Save Volvio Serviodr" + result);
+                    var result = eval('(' + result + ')');
+                    alert("Save Volvio Serviodr" + result.errorMsg);
+
+                    if (!result.respuesta) {
+                        $.messager.show({
+                            title: 'Error',
+                            msg: result.errorMsg
+                        });
+                    } else {
+                        $.messager.show({
+                            title: 'Correcto',
+                            msg: "Se ha registrado nuevo usuario, Aguarde a que un Admin lo habilite"
+                        })
+                        $('#dlgnuevo').dialog('close'); // close the dialog
+                    }
+                }
+            });
+        }
+
+
+
+
+        function newUsuario() {
+            $('#dlgnuevo').dialog('open').dialog('center').dialog('setTitle', 'Nuevo Usuario');
+            $('#fmusuario').form('clear');
+            url = 'acc_alta_usuario.php';
+        }
 </script>
 <?php include_once "../../util/Estructura/footer.php"; ?>
 
