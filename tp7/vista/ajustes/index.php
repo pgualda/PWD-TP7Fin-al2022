@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +11,14 @@
 </head>
 
 <body>
-    <?php include_once "../../util/Estructura/header.php"; ?>
+
+    <?php
+    include_once "../../util/Estructura/header.php";
+    $objRoles = new CTRLRol();
+    $arrRoles = $objRoles->buscar(null);
+
+
+    ?>
 
 
     <br>
@@ -91,9 +99,11 @@
                 <input name="usmail" id="usmail" class="easyui-textbox" required label="Mail" style="width:100%">
             </div>
             <div style="margin-bottom:10px" style="display:none">
-                <input name="uspass" id="uspass" class="easyui-textbox" type="password" label="Clave" style="width:100%;display:none;">
+                <input name="uspass" id="uspass" class="easyui-textbox" type="password" required label="Clave" style="width:100%;display:none;">
             </div>
-
+            <div style="margin-bottom:10px" style="display:none">
+                <input name="uspass2" id="uspass2" class="easyui-textbox" type="password" required label="Clave" style="width:100%;display:none;">
+            </div>
         </form>
     </div>
 
@@ -104,15 +114,36 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
     </div>
 
+    <!-- m o d a l   p a r a   a s i g n a r   r o l e s -->
+
+    <div id="dlgrol" class="easyui-dialog" style="width:600px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlgrol-buttons'">
+        <form id="fmrol" method="post" style="margin:0;padding:20px 50px">
+            <?php
+            foreach ($arrRoles as $rol) {
+                echo '<div style="margin-bottom:10px">';
+                echo '<input class="easyui-checkbox" name="rol" value="' . $rol->getidrol() . '" label="' . $rol->getrodescripcion() . ':">';
+                echo '</div>';
+            }
+            ?>
+        </form>
+    </div>
+
+    <!-- o p c i o n e s   m o d a l   r o l e s -->
+
+    <div id="dlgrol-buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="asigRoles()" style="width:90px">Aceptar</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlgrol').dialog('close')" style="width:90px">Cancelar</a>
+    </div>
 
 
 
 
     <script>
         var url;
-            function selectrol() {
-                alert('ok');
-            }
+
+        function selectrol() {
+            alert('ok');
+        }
 
         $('#dgusers').datagrid({
             onSelect: function(index, field, value) {
@@ -124,66 +155,100 @@
             }
         });
 
+        //          a  g  r  e  g  a  r     n  u  e  v  o    u  s  u  a  r  i  o
+
+        function addUser(){
+    
+                $('#dlg').dialog('open').dialog('center').dialog('setTitle','Nuevo Usuario');
+                $('#fm').form('clear');
+                url = 'acc_alta_usuario.php';
+    
+        }
+
+        //          a  s  i  g  n  a  r     r  o  l  e  s
+
+        function addRol() {
+            var row = $('#dgusers').datagrid('getSelected');
+            if (row) {
+                $('#dlgrol').dialog('open').dialog('center').dialog('setTitle', 'seleccione roles');
+            }
+
+        }
+
+        function asigRoles() {
+            alert(row.idusuario);
+            if (row) {
+                $.post('acc_hab_user.php?idusuario=' + row.idusuario, {
+                        idusuario: row.idusuario
+                    },
+                    function(result) {
+                        //                               	 alert("Baja - Volvio Servidor"+result);   
+                        if (result.respuesta) {
+                            $('#dgusers').datagrid('reload'); // reload the  data
+                            $('#dgexuser').datagrid('reload'); // reload the  data
+                        } else {
+                            $.messager.show({ // show error message
+                                title: 'Error',
+                                msg: result.errorMsg
+                            });
+                        }
+                    }, 'json');
+            }
+        }
+
         //          h  a  b  i  l  i  t  a  r     u  s  u  a  r  i  o
-        
-        function habUser(){
-                var row = $('#dgexuser').datagrid('getSelected');
-                if (row){
-                    $.messager.confirm('Confirm','Desea dar de alta a este usuario?', function(r){
-                        if (r){
-                            $.post('acc_hab_user.php?idusuario='+row.idusuario,
-                            {
-                                idusuario:row.idusuario
+
+        function habUser() {
+            var row = $('#dgexuser').datagrid('getSelected');
+            if (row) {
+                $.messager.confirm('Confirm', 'Desea dar de alta a este usuario?', function(r) {
+                    if (r) {
+                        $.post('acc_hab_user.php?idusuario=' + row.idusuario, {
+                                idusuario: row.idusuario
                             },
-                               function(result){
-//                               	 alert("Baja - Volvio Servidor"+result);   
-                                 if (result.respuesta){
-                                    $('#dgusers').datagrid('reload');    // reload the  data
-                                    $('#dgexuser').datagrid('reload');    // reload the  data
+                            function(result) {
+                                //                               	 alert("Baja - Volvio Servidor"+result);   
+                                if (result.respuesta) {
+                                    $('#dgusers').datagrid('reload'); // reload the  data
+                                    $('#dgexuser').datagrid('reload'); // reload the  data
                                 } else {
-                                    $.messager.show({    // show error message
+                                    $.messager.show({ // show error message
                                         title: 'Error',
                                         msg: result.errorMsg
-                                  });
+                                    });
                                 }
-                            },'json');
-                        }
-                    });
-                }
+                            }, 'json');
+                    }
+                });
             }
+        }
 
         //          d  e  s  h  a  b  i  l  i  t  a  r     u  s  u  a  r  i  o
 
-        function bajaUser(){
-                var row = $('#dgusers').datagrid('getSelected');
-                if (row){
-                    $.messager.confirm('Confirm','Desea dar de baja a este usuario?', function(r){
-                        if (r){
-                            $.post('acc_des_user.php?idusuario='+row.idusuario,
-                            {
-                                idusuario:row.idusuario
+        function bajaUser() {
+            var row = $('#dgusers').datagrid('getSelected');
+            if (row) {
+                $.messager.confirm('Confirm', 'Desea dar de baja a este usuario?', function(r) {
+                    if (r) {
+                        $.post('acc_des_user.php?idusuario=' + row.idusuario, {
+                                idusuario: row.idusuario
                             },
-                               function(result){
-//                               	 alert("Baja - Volvio Servidor"+result);   
-                                 if (result.respuesta){
-                                    $('#dgusers').datagrid('reload');    // reload the  data
-                                    $('#dgexuser').datagrid('reload');    // reload the  data
+                            function(result) {
+                                //                               	 alert("Baja - Volvio Servidor"+result);   
+                                if (result.respuesta) {
+                                    $('#dgusers').datagrid('reload'); // reload the  data
+                                    $('#dgexuser').datagrid('reload'); // reload the  data
                                 } else {
-                                    $.messager.show({    // show error message
+                                    $.messager.show({ // show error message
                                         title: 'Error',
                                         msg: result.errorMsg
-                                  });
+                                    });
                                 }
-                            },'json');
-                        }
-                    });
-                }
+                            }, 'json');
+                    }
+                });
             }
-
-
-
-
-
+        }
     </script>
 
 

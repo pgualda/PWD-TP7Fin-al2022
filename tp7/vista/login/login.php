@@ -23,7 +23,7 @@
             <table>
                 <tr>
                     <td>Usuario:</td>
-                    <td><input id="usnombre" name="usnombre" autofocus></input></td>
+                    <td><input id="usnombre" name="usnombre"></input></td>
                 </tr>
                 <tr>
                     <td>Clave:</td>
@@ -43,8 +43,11 @@
     <?php include_once "../../util/Estructura/footer.php"; ?>
 
     <script type="text/javascript">
-
-
+        $(document).ready(function(){
+            $(document).click(function(){
+                $('#usnombre').focus();
+            }) 
+        });
 
 
         function formSubmit() {
