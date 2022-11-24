@@ -119,5 +119,16 @@ class CTRLProducto {
         $arreglo = Producto::listar($where);
         return $arreglo;
     }
+
+    public function hayStock($idprod,$cantidad){
+        $resp = true;
+        $where = " idproducto=".$idprod;
+        $obj = Producto::listar($where);
+        if($obj[0]->getprocantstock() < $cantidad){
+            $resp = false;
+        }
+        return $resp;
+    }
+
 }
 ?>
