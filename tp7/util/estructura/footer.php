@@ -5,7 +5,7 @@
   <footer>
         <div>
           <h5>Integrantes</h5>
-          <p>Norberto Gualda - Sabrina Gaspart - Matias Farfan - Franco Ramirez</p>
+          <p>Norberto Gualda - Matias Farfan </p>
         </div>
       </div>
       <div style="background-color: rgba(0, 0, 0, 0.2);">

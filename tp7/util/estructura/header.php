@@ -71,6 +71,11 @@
 			   	echo "<a href='".$url."' class='easyui-menubutton c2' style='margin:3px;padding:3px;' data-options='menu:".'"#mm'.$OBJunmenu->getidmenu().'"'."'>".$OBJunmenu->getmenombre()."</a>";
 			} 
 		}  
+
+		if($OBJSession->validar()){
+			echo "<a class='easyui-linkbutton c2' id='btn-cerrar' href='../login/logout.php' style='margin:3px;padding:3px;float:right'>Cerrar sesion</a>";
+		}
+
 		echo "</div>"; // cerramos el div de las principales, siguen los hijos
 
         // barre de nuevo, cuando encuentra sin padre, hace un nuevo foreach SOLO de ese
