@@ -3,12 +3,15 @@ include_once "../../configuracion.php";
 $data = data_submitted();
 $respuesta = false;
 // debug
+//var_dump($data);
 //foreach ($data as $ele) {
 //$console="antes del if idrol:".$ele; }
 //echo "<script>console.log('Console: " . $console . "' );</script>";
-$data['usdeshabilitado'] = null;
+//$data['usdeshabilitado'] = null;
+
 if (isset($data['idusuario'])){
     $objC = new CTRLUsuario();
+
     $respuesta = $objC->modificacion($data);
 // debug
 //$console="entra en el if de idrol oka".$respuesta;

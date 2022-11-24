@@ -91,6 +91,7 @@ class CTRLUsuario {
         $resp = false;
         if ($this->seteadosCamposClaves($param)){
             $obj = $this->cargarObjeto($param);
+            $obj->setusdeshabilitado("NULL");
             if($obj !=null and $obj->modificar()){
                 $resp = true;
             }

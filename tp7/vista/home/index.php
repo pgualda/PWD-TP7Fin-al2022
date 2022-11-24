@@ -125,7 +125,7 @@
 
     <!-- o p c i o n e s   m o d a l  -->
     <div id="dlg-buttons">
-        <a href="javascript:void(0)" id="enviar" type="submit" class="easyui-linkbutton c6" iconCls="icon-ok" onsubmit="" style="width:90px">Aceptar</a>
+        <a href="javascript:void(0)" id="enviar" type="submit" class="easyui-linkbutton c6" iconCls="icon-ok" style="width:90px">Aceptar</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
     </div>
 
