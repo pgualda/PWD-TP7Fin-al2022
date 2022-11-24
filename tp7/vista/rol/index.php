@@ -1,10 +1,15 @@
 <?php
 include_once("../../util/estructura/header.php");
-include_once "../../util/esPrivada.php";
+if ( !$OBJSession->puedoentrar(__FILE__) ) {
+    $mensaje ="Esta opcion requiere permisos, logeese para acceder";
+    echo $mensaje;
+    echo "<script>location.href = '../login/login.php?msg=".$mensaje."';</script>";
+}
 ?>
 
 <body>
-
+ 
+<br>
     <table id="dg" title="Administrador de rols" class="easyui-datagrid" style="width:700px;height:250px" url="listar_rol.php" toolbar="#toolbar" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
         <thead>
             <tr>
@@ -109,5 +114,5 @@ include_once "../../util/esPrivada.php";
 
     </script>
 </body>
-
+<?php include_once "../../util/Estructura/footer.php"; ?>
 </html>

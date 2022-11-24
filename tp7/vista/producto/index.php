@@ -1,6 +1,10 @@
 <?php
 include_once("../../util/estructura/header.php");
-include_once "../../util/esPrivada.php";
+if ( !$OBJSession->puedoentrar(__FILE__) ) {
+    $mensaje ="Esta opcion requiere permisos, logeese para acceder";
+    echo $mensaje;
+    echo "<script>location.href = '../login/login.php?msg=".$mensaje."';</script>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +14,7 @@ include_once "../../util/esPrivada.php";
 </head>
 
 <body>
-
+<br>
     <table id="dg" title="Administrador de productos" class="easyui-datagrid" style="width:700px;height:500px" url="listar_producto.php" toolbar="#toolbar" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
         <thead>
             <tr>
@@ -119,5 +123,5 @@ include_once "../../util/esPrivada.php";
 
     </script>
 </body>
-
+<?php include_once "../../util/Estructura/footer.php"; ?>
 </html>

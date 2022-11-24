@@ -8,14 +8,12 @@
 </head>
 
 <body>
-    <?php include_once "../../util/Estructura/header.php"; ?>
-    <?php
+    <?php 
+    include_once "../../util/Estructura/header.php"; 
     $datos = data_submitted();
-    if (isset($datos['msg'])) {
-        echo "<p>" . $datos['msg'] . "</p><br>";
-    }
     ?>
-
+    
+<div class="centro">
     <div class="easyui-panel" title="Login" style="width:300px;padding:10px;">
 
         <form id="login" method="post" name="login" action="verlogin.php">
@@ -39,6 +37,12 @@
             </table>
         </form>
     </div>
+<?php
+    if (isset($datos['msg'])) {
+        echo "<div class='txtCenter'><p>" . $datos['msg'] . "</p></div><br>";
+    }
+?>
+</div>
 
     <?php include_once "../../util/Estructura/footer.php"; ?>
 
@@ -65,5 +69,5 @@
     </script>
 
 </body>
-
+<?php include_once "../../util/Estructura/footer.php"; ?>
 </html>

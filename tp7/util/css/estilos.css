@@ -1,0 +1,125 @@
+body {
+    background: #00416A;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E4E5E6, #00416A);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E4E5E6, #00416A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+    display: table;
+    width: 100%;
+    height: 13vh;
+    background-color: #000;
+    color:#fff;
+    text-align: center;
+  
+  }
+
+.easyui-panel {
+    border-radius: 0.5em;
+    background: #0F2027;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #2C5364, #203A43, #0F2027);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #537f92, #45636d, #2d4c5a);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border: gray solid 3px;
+}
+
+.centrar-items{
+    align-items: center;
+}
+
+.panel-header {
+    border-radius: 0.5em;
+    background: #0F2027;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #2C5364, #203A43, #0F2027);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #4c5d64, #3f555c, #30515f);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    /* border: gray solid 3px; */
+    text-align: center;
+}
+
+.datagrid-toolbar {
+    border-radius: 1em;
+    background: #0F2027;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #2C5364, #203A43, #0F2027);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #2C5364, #203A43, #0F2027);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border: gray solid 3px;
+}
+
+.panel-body {
+    border-radius: 0em 0em 1em 1em;
+}
+
+.tabs-header{
+    border-radius: 1em 1em 0em 0em;
+}
+
+.tabs-panels{
+    border-radius: 0em 0em 1em 1em;
+}
+
+.c3{
+    color: white;
+    background: linear-gradient(to bottom,#3186bd 0,#07214c 100%);
+}
+
+a.c3:hover{
+    color: white;
+    background: linear-gradient(to bottom,#7798ad 0,#4a5972 100%);
+}
+
+#LogoInicio{
+    margin: 0px 42%;
+    width: 180px;
+    transition: transform .2s;
+}
+#LogoInicio:hover{
+    transform: scale(1.15);
+}
+
+.centro{
+    margin: 10% 38%;
+}
+
+.txtCenter p {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+
+
+
+#compra {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  #compra td, #compra th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  #compra tr:nth-child(even){background-color: #f2f2f2;}
+
+  #compra tr:hover {background-color: #ddd;}
+
+  #compra th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+  }
+
+
+

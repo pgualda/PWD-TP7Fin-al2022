@@ -27,7 +27,7 @@
     <a href="../home/index.php" class="easyui-linkbutton c8" style="width:80px; margin:10px;">Volver</a>
 </div>
 
-<?php include_once "../../util/Estructura/footer.php"; ?>
 
 </body>
+<?php include_once "../../util/Estructura/footer.php"; ?>
 </html>

@@ -9,7 +9,11 @@
 </head>
 <body>
 <?php include_once "../../util/Estructura/header.php";
-include_once "../../util/esPrivada.php";
+if ( !$OBJSession->puedoentrar(__FILE__) ) {
+    $mensaje ="Esta opcion requiere permisos, logeese para acceder";
+    echo $mensaje;
+    echo "<script>location.href = '../login/login.php?msg=".$mensaje."';</script>";
+}
 ?>
 <div style="margin:20px 0;"></div>
     <div class="easyui-panel" title="Informe de compras" style="width:100%;max-width:350px;padding:30px 60px;">
@@ -48,7 +52,7 @@ function submitForm(){
 
 </script> 
 
-<?php include_once "../../util/Estructura/footer.php"; ?>
 
 </body>
+<?php include_once "../../util/Estructura/footer.php"; ?>
 </html>

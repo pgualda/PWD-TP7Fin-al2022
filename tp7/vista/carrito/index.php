@@ -1,7 +1,11 @@
-<body>
+
     <?php
     include_once("../../util/estructura/header.php");
-    include_once "../../util/esPrivada.php";
+    if ( !$OBJSession->puedoentrar(__FILE__) ) {
+        $mensaje ="Esta opcion requiere permisos, logeese para acceder";
+        echo $mensaje;
+        echo "<script>location.href = '../login/login.php?msg=".$mensaje."';</script>";
+    }
 
     $datos = data_submitted();
     $compra = new CTRLCompra();
@@ -16,11 +20,11 @@
     if ($carrEnProc == null) {
             echo "<h4>No hay carrito iniciado</h4>";
     ?>
-            <a href="acc_carrito_iniciar.php?idusuario=<?php echo $user; ?>" id="ania" class="easyui-linkbutton" iconCls="icon-add" plain="true" style="height:50px">Iniciar Carrito</a>
+            <a href="acc_carrito_iniciar.php?idusuario=<?php echo $user; ?>" id="ania" class="easyui-linkbutton c3" iconCls="icon-add" plain="true" style="height:30px; width:300px">Iniciar Carrito</a>
         <?php
     } else {
         ?>
-            <a href="acc_carrito_finalizar.php?idcompra=<?php echo $idcompra; ?>" class="easyui-linkbutton" iconCls="icon-save" plain="true" style="height:50px">
+            <a href="acc_carrito_finalizar.php?idcompra=<?php echo $idcompra; ?>" class="easyui-linkbutton c5" iconCls="icon-save" plain="true" style="height:30px; width:300px">
                 <h3>Finalizar Carrito</h3>
             </a>
     <?php
@@ -99,6 +103,7 @@
         <a href="javascript:void(0)" id="finall" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveMenu()" style="width:90px">Aceptar</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
     </div>
+    <br>
 
     <script type="text/javascript">
         var url;
@@ -206,5 +211,5 @@
         });
     </script>
 </body>
-
+<?php include_once "../../util/Estructura/footer.php"; ?>
 </html>

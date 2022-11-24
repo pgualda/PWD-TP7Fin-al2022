@@ -1,13 +1,18 @@
 <?php
 $Titulo = " Gestion de Usuarios";
 include_once("../../util/estructura/header.php");
+if ( !$OBJSession->puedoentrar(__FILE__) ) {
+    $mensaje ="Esta opcion requiere permisos, logeese para acceder";
+    echo $mensaje;
+    echo "<script>location.href = '../login/login.php?msg=".$mensaje."';</script>";
+}
 $datos = data_submitted();
 
 $obj = new CTRLMenu();
 $lista = $obj->buscar(null);
 
 ?>
-
+<br>
 <table id="dg" title="Administrador de item menu" class="easyui-datagrid" style="width:900px;height:300px" url="listar_menu.php" toolbar="#toolbar" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true">
     <thead>
         <tr>
@@ -28,6 +33,7 @@ $lista = $obj->buscar(null);
     <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyMenu()">Baja Menu</a>
 </div>
 
+<br>
 <div id="dlg" class="easyui-dialog" style="width:600px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
     <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
         <h3>Menu Informacion</h3>
@@ -96,7 +102,7 @@ $lista = $obj->buscar(null);
 </div>
 
 
-<p id="idmenusel">sin selecc-de momento sin uso</p>
+<br>
 
 <script type="text/javascript">
     var url;
@@ -233,6 +239,8 @@ $lista = $obj->buscar(null);
     }
     
 </script>
+
+</body>
 <?php
 
 include_once("../../util/estructura/footer.php");

@@ -18,8 +18,11 @@
         $combo .= '<option value="' . $rol->getidrol() . '" > ' . $rol->getrodescripcion();
     }
 
-    include_once "../../util/esPrivada.php";
-
+    if ( !$OBJSession->puedoentrar(__FILE__) ) {
+        $mensaje ="Esta opcion requiere permisos, logeese para acceder";
+        echo $mensaje;
+        echo "<script>location.href = '../login/login.php?msg=".$mensaje."';</script>";
+    }
     ?>
 
 
@@ -29,7 +32,7 @@
 
             <!-- d a t a g r i d   u s u a r i o s   a c t i v o s -->
 
-            <table id="dgusers" title="Usuarios activos" url="acc_listar_user.php" class="easyui-datagrid" style="width:800px;height:200px" toolbar="#tbuser" pagination="false" rownumbers="true" fitColumns="true" singleSelect="true">
+            <table id="dgusers" title="Usuarios activos" url="acc_listar_user.php" class="easyui-datagrid" style="width:800px;height:300px" toolbar="#tbuser" pagination="false" rownumbers="true" fitColumns="true" singleSelect="true">
                 <thead>
                     <tr>
                         <th field="idusuario" width="5px">ID</th>
@@ -40,10 +43,10 @@
                     </tr>
                 </thead>
             </table>
-
+<br>
             <!-- d a t a g r i d   r o l e s   d e l   u s u a r i o -->
 
-            <table id="dgRol" class="easyui-datagrid" style="width:700px;height:300px" url="acc_listar_rol.php" toolbar="#tbrol" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true" data-options="method:'post',queryParams:{idusuario:''},title:'Roles'">
+            <table id="dgRol" class="easyui-datagrid" style="width:600px;height:250px" url="acc_listar_rol.php" toolbar="#tbrol" pagination="true" rownumbers="true" fitColumns="true" singleSelect="true" data-options="method:'post',queryParams:{idusuario:''},title:'Roles'">
                 <thead>
                     <tr>
                         <th field="idusuario" width="10px" hidden>ID</th>
@@ -63,13 +66,12 @@
                 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addRol()">Agregar rol</a>
                 <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="quitRol()">Quitar rol</a>
             </div>
-            <p id="idusersel">sin selecc</p>
 
         </div>
 
         <!-- d a t a g r i d   u s u a r i o s   i n a c t i v o s -->
         <div title="Usuarios inactivos" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
-            <table id="dgexuser" url="acc_listar_exuser.php" title="Deshabilitados" class="easyui-datagrid" style="width:700px;height:250px" toolbar="#tbexus" pagination="false" fitColumns="true" singleSelect="true">
+            <table id="dgexuser" url="acc_listar_exuser.php" title="Deshabilitados" class="easyui-datagrid" style="width:700px;height:400px" toolbar="#tbexus" pagination="false" fitColumns="true" singleSelect="true">
                 <thead>
                     <tr>
                         <th field="idusuario" width="10px">ID usuario</th>
@@ -84,10 +86,11 @@
             </div>
         </div>
     </div>
+    
     <!-- ------------------------------------------------------------------H  I  D  D  E  N ------------------------------------------------------------------ -->
 
     <!--  m o d a l   p a r a   n u e v o   r e g i s t r o -->
-
+<br>
     <div id="dlgnuevo" class="easyui-dialog" style="width:600px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons-nuevo'">
         <form id="fmusuario" method="post" style="margin:0;padding:20px 50px" data-options="novalidate:true">
             <div style="margin-bottom:10px">
@@ -398,7 +401,7 @@
 
     </script>
     </div>
-    <?php include_once "../../util/Estructura/footer.php"; ?>
 </body>
+<?php include_once "../../util/Estructura/footer.php"; ?>
 
 </html>

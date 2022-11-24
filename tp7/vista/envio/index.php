@@ -1,6 +1,10 @@
 <?php
 include_once("../../util/estructura/header.php");
-include_once "../../util/esPrivada.php";
+if ( !$OBJSession->puedoentrar(__FILE__) ) {
+    $mensaje ="Esta opcion requiere permisos, logeese para acceder";
+    echo $mensaje;
+    echo "<script>location.href = '../login/login.php?msg=".$mensaje."';</script>";
+}
 $datos = data_submitted();
 ?>
 
@@ -8,7 +12,7 @@ $datos = data_submitted();
 <body>
 <!--    <h3>Envio de compras aceptadas</h3> -->
 <!--    <p>Seleccion una operacion y si es necesario edite las cantidades</p> -->
-
+<br>
     <!-- Lista de compras aceptadas sin enviar, revisar en envio_listar_compra.php para q vengan solo correctos -->
     <div id="dgdiv">
         <table id="dg" title="Compras a enviar" class="easyui-datagrid" style="width:700px;height:400px"
@@ -208,7 +212,7 @@ $datos = data_submitted();
             event.preventDefault(); // No need to `return false;`.
         }); */
     </script>
-    <?php include_once "../../util/Estructura/footer.php"; ?>
 </body>
+<?php include_once "../../util/Estructura/footer.php"; ?>
 
 </html>

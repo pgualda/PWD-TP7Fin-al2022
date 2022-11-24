@@ -5,25 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        #compra {
-          border-collapse: collapse;
-          width: 100%;
-        }
-
-        #compra td, #compra th {
-          border: 1px solid #ddd;
-          padding: 8px;
-        }
-
-        #compra tr:nth-child(even){background-color: #f2f2f2;}
-
-        #compra tr:hover {background-color: #ddd;}
-
-        #compra th {
-          padding-top: 12px;
-          padding-bottom: 12px;
-          text-align: left;
-        }
+        
 </style>
 
     <title>FERRETERIA MAYORISTA</title>
@@ -91,8 +73,8 @@ if ( count($listacompra)>0){
 //              echo "<div class='col-lg-2 col-md-3 col-sm-4  mb-3'>";
 //              echo "<button type='button' id='btnmodal' class='' data-toggle='modal' data-target='#exampleModal' data-nom='".$directorio.$archivo."' data-txtqr='".$qrcode_text."'>";
               //$icono='data-options="iconCls:'."'icon-cut'"."'";
-              echo "<a href='javascript:void(0)' id='cambiaestado' class='' 
-                     style='width:90px; text-decoration:none' data-idcompra='".$objunacompra->getidcompra()."'>Cancelar</a>";
+              echo "<a href='javascript:void(0)' id='cambiaestado' class='easyui-linkbutton c5' 
+                     style='width:90px; height:20px; text-decoration:none' data-idcompra='".$objunacompra->getidcompra()."'>Cancelar</a>";
  
             }
             echo '</td>';

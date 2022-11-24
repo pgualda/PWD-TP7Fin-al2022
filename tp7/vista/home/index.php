@@ -8,8 +8,6 @@
 
     <title>FERRETERIA MAYORISTA</title>
 </head>
-
-<body>
     <?php include_once "../../util/Estructura/header.php";     ?>
 
     <div class="easyui-panel" style="padding:5px;">
@@ -33,8 +31,9 @@
             }
         } else {
         ?>
-            <a class='easyui-linkbutton c2' style='margin:3px;padding:3px;' href='javascript:void(0)' plain="true" onclick="newUsuario()">Generar un usuario de cliente -debera ser validado-</a>
-            <a class='easyui-linkbutton c2' style='margin:3px;padding:3px;' href='../login/login.php'>Logearse</a>
+            <h1 style="text-align: center;">Bienvenido a nuestro sistema de ventas!</h1>
+            <a class='easyui-linkbutton c3' style='height:60px;margin:3px 28%;padding:3px;' href='javascript:void(0)' plain="true" onclick="newUsuario()">Registrarse</a>
+            <a class='easyui-linkbutton c3' style='height:60px;margin:3px;padding:3px;' href='../login/login.php'>Iniciar sesion</a>
 
             <!--  m o d a l   p a r a   n u e v o   r e g i s t r o -->
 
@@ -326,8 +325,8 @@
 
 
 </script>
-<?php include_once "../../util/Estructura/footer.php"; ?>
 
 </body>
+<?php include_once "../../util/Estructura/footer.php"; ?>
 
 </html>
