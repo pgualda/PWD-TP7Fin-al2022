@@ -186,7 +186,6 @@
     /* funcion que llama y modifica dgDatos para poder cambiar el email*/
     function editUsuario() {
         var row = $('#dgDatos').datagrid('getSelected');
-        var a = "NULL"
 
         if (row) {
             $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Editar correo');
@@ -244,7 +243,7 @@
             ruta = 'idusuario=' + idusuario + '&usnombre=' + usnombre + '&uspass=' + uspass + '&usmail=' + usmail + '&usdeshabilitado=' + usdeshabilitado
         } else {
             var hashpass = CryptoJS.MD5(uspass2);
-            alert(hashpass)
+            //alert(hashpass)
             ruta = 'idusuario=' + idusuario + '&usnombre=' + usnombre + '&uspass=' + hashpass + '&usmail=' + usmail + '&usdeshabilitado=' + usdeshabilitado
         }
         //var ruta = ruta = 'idusuario=' + idusuario + '&usnombre=' + usnombre + '&uspass=' + uspass + '&usmail=' + usmail;
@@ -257,7 +256,7 @@
                 return $('#fm').form('validate');
             },
             success: function(result) {
-                alert("Save Volvio Serviodr" + result);
+                //alert("Save Volvio Serviodr" + result);
                 var result = eval('(' + result + ')');
                 //alert("Save Volvio Serviodr" + result.errorMsg);
 
@@ -290,42 +289,42 @@
         var hashpass = CryptoJS.MD5(uspass2);
         var ruta = 'idusuario=' + idusuario + '&usnombre=' + usnombre + '&uspass=' + hashpass + '&usmail=' + usmail + '&usdeshabilitado=' + usdeshabilitado;
 
-            $.ajax({
-                url: "acc_alta_usuario.php",
-                type: 'POST',
-                data: ruta,
-                onSubmit: function() {
-                    return $('#fmusuario').form('validate');
-                },
-                success: function(result) {
-                    alert("Save Volvio Serviodr" + result);
-                    var result = eval('(' + result + ')');
-                    alert("Save Volvio Serviodr" + result.errorMsg);
+        $.ajax({
+            url: "acc_alta_usuario.php",
+            type: 'POST',
+            data: ruta,
+            onSubmit: function() {
+                return $('#fmusuario').form('validate');
+            },
+            success: function(result) {
+                //alert("Save Volvio Serviodr" + result);
+                var result = eval('(' + result + ')');
+                //alert("Save Volvio Serviodr" + result.errorMsg);
 
-                    if (!result.respuesta) {
-                        $.messager.show({
-                            title: 'Error',
-                            msg: result.errorMsg
-                        });
-                    } else {
-                        $.messager.show({
-                            title: 'Correcto',
-                            msg: "Se ha registrado nuevo usuario, Aguarde a que un Admin lo habilite"
-                        })
-                        $('#dlgnuevo').dialog('close'); // close the dialog
-                    }
+                if (!result.respuesta) {
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $.messager.show({
+                        title: 'Correcto',
+                        msg: "Se ha registrado nuevo usuario, Aguarde a que un Admin lo habilite"
+                    })
+                    $('#dlgnuevo').dialog('close'); // close the dialog
                 }
-            });
-        }
+            }
+        });
+    }
 
 
+    function newUsuario() {
+        $('#dlgnuevo').dialog('open').dialog('center').dialog('setTitle', 'Nuevo Usuario');
+        $('#fmusuario').form('clear');
+        url = 'acc_alta_usuario.php';
+    }
 
 
-        function newUsuario() {
-            $('#dlgnuevo').dialog('open').dialog('center').dialog('setTitle', 'Nuevo Usuario');
-            $('#fmusuario').form('clear');
-            url = 'acc_alta_usuario.php';
-        }
 </script>
 <?php include_once "../../util/Estructura/footer.php"; ?>
 

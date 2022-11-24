@@ -18,6 +18,8 @@
         $combo .= '<option value="' . $rol->getidrol() . '" > ' . $rol->getrodescripcion();
     }
 
+    include_once "../../util/esPrivada.php";
+
     ?>
 
 
@@ -325,7 +327,6 @@
             var row = $('#dgusers').datagrid('getSelected');
             if(row) {
                 row.uspass = "";
-                alert("mostrar" + row );
                 $('#dlgnuevo').dialog('open').dialog('center').dialog('setTitle', 'Editar usuario')
                 $('#fmusuario').form('load',row)
             }
@@ -363,7 +364,7 @@
                     } else {
                         $.messager.show({
                             title: 'Correcto',
-                            msg: "Se ha registrado nuevo usuario"
+                            msg: "Se han procesado los datos"
                         })
                         $('#dlgnuevo').dialog('close'); // close the dialog
                         $('#dgexuser').datagrid('reload');

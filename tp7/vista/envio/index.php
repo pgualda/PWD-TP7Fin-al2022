@@ -1,5 +1,6 @@
 <?php
 include_once("../../util/estructura/header.php");
+include_once "../../util/esPrivada.php";
 $datos = data_submitted();
 ?>
 

@@ -1,6 +1,7 @@
 <body>
     <?php
     include_once("../../util/estructura/header.php");
+    include_once "../../util/esPrivada.php";
 
     $datos = data_submitted();
     $compra = new CTRLCompra();
@@ -101,14 +102,9 @@
 
     <script type="text/javascript">
         var url;
-
-        // filtro para carrito por idcompra del usuario
-        // var val = <?php //echo $idcompra ?>;
+        
         $('#dgcarr').datagrid({
-            url: 'acc_listar_carrito.php'/* ,
-            queryParams: {
-                idcompra: val
-            } */
+            url: 'acc_listar_carrito.php'
         });
 
         function editMenu() {

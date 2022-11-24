@@ -9,11 +9,7 @@
 </head>
 <body>
 <?php include_once "../../util/Estructura/header.php";
-if ( !$OBJSession->puedoentrar(__FILE__) ) {
-	$mensaje ="Esta opcion requiere permisos, logeese para acceder";
-    echo $mensaje;
-    echo "<script>location.href = '../login/login.php?msg=".$mensaje."';</script>";
-}
+include_once "../../util/esPrivada.php";
 ?>
 <div style="margin:20px 0;"></div>
     <div class="easyui-panel" title="Informe de compras" style="width:100%;max-width:350px;padding:30px 60px;">
